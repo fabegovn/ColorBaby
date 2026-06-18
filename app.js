@@ -29,7 +29,7 @@ function layer(content, x, y, scale = 1) {
 
 function fittedLayers(pieces, content) {
   const artSize = 330;
-  const padding = 1;
+  const padding = 0;
   const bounds = pieces.reduce(
     (box, [, x, y, scale = 1]) => ({
       minX: Math.min(box.minX, x),
@@ -42,7 +42,7 @@ function fittedLayers(pieces, content) {
   const width = bounds.maxX - bounds.minX;
   const height = bounds.maxY - bounds.minY;
   const fitScale = Math.min((900 - padding * 2) / width, (900 - padding * 2) / height);
-  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale;
+  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale +20;
   const y = (900 - height * fitScale) / 2 - bounds.minY * fitScale;
 
   return `<g transform="translate(${x} ${y}) scale(${fitScale})">${content}</g>`;

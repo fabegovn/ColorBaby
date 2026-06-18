@@ -148,7 +148,7 @@ h2 {
 
 .picture-button {
   display: grid;
-  gap: 6px;
+  gap: 3px;
   min-height: 128px;
   padding: 8px;
   text-align: center;
@@ -185,7 +185,7 @@ h2 {
 }
 
 .color-swatch[aria-pressed="true"] {
-  box-shadow: 0 0 0 10px #15202b;
+  box-shadow: 0 0 0 5px #15202b;
 }
 
 .brush-title {
@@ -384,7 +384,7 @@ input:focus-visible {
   }
 
   .palette {
-    grid-template-columns: repeat(4, minmax(48px, 1fr));
+    grid-template-columns: repeat(6, minmax(48px, 1fr));
   }
 
   .color-swatch {
