@@ -177,7 +177,82 @@ const artParts = {
   crown: {
     line: `<path d="M46 230 H254 L236 100 L188 166 L150 74 L112 166 L64 100 Z" /><path d="M70 230 V260 H230 V230" /><circle cx="150" cy="72" r="12" /><circle cx="64" cy="100" r="12" /><circle cx="236" cy="100" r="12" />`,
     mask: `<path fill="#000" d="M46 230 H254 L236 100 L188 166 L150 74 L112 166 L64 100 Z" /><path fill="#000" d="M70 230 V260 H230 V230 Z" /><circle fill="#000" cx="150" cy="72" r="12" /><circle fill="#000" cx="64" cy="100" r="12" /><circle fill="#000" cx="236" cy="100" r="12" />`
-  }
+  },
+  frog: {
+    line: `<ellipse cx="150" cy="168" rx="90" ry="72" /><circle cx="110" cy="104" r="20" /><circle cx="190" cy="104" r="20" /><circle cx="110" cy="104" r="7" /><circle cx="190" cy="104" r="7" /><path d="M118 182 C136 200 164 200 182 182" /><path d="M126 162 C138 156 162 156 174 162" /><path d="M82 136 C56 116 44 138 58 156" /><path d="M218 136 C244 116 256 138 242 156" />`,
+    mask: `<ellipse fill="#000" cx="150" cy="168" rx="90" ry="72" /><circle fill="#000" cx="110" cy="104" r="20" /><circle fill="#000" cx="190" cy="104" r="20" />`
+  },
+  bee: {
+    line: `<ellipse cx="150" cy="164" rx="88" ry="54" /><path d="M120 132 C102 100 122 84 142 104" /><path d="M180 132 C198 100 178 84 158 104" /><path d="M124 140 H176" /><path d="M112 164 H188" /><path d="M124 188 H176" /><path d="M90 148 C58 132 48 154 74 170" /><path d="M210 148 C242 132 252 154 226 170" /><path d="M150 218 V260" />`,
+    mask: `<ellipse fill="#000" cx="150" cy="164" rx="88" ry="54" /><path fill="#000" d="M120 132 C102 100 122 84 142 104 Z" /><path fill="#000" d="M180 132 C198 100 178 84 158 104 Z" />`
+  },
+  pig: {
+    line: `<circle cx="150" cy="154" r="86" /><path d="M96 94 L68 54 L110 74" /><path d="M204 94 L232 54 L190 74" /><ellipse cx="150" cy="172" rx="34" ry="26" /><circle cx="138" cy="170" r="5" /><circle cx="162" cy="170" r="5" /><path d="M124 140 C136 132 164 132 176 140" /><path d="M112 206 C132 224 168 224 188 206" />`,
+    mask: `<circle fill="#000" cx="150" cy="154" r="86" /><path fill="#000" d="M96 94 L68 54 L110 74 Z" /><path fill="#000" d="M204 94 L232 54 L190 74 Z" /><ellipse fill="#000" cx="150" cy="172" rx="34" ry="26" />`
+  },
+  panda: {
+    line: `<circle cx="150" cy="154" r="84" /><circle cx="92" cy="100" r="24" /><circle cx="208" cy="100" r="24" /><ellipse cx="124" cy="154" rx="24" ry="30" /><ellipse cx="176" cy="154" rx="24" ry="30" /><path d="M142 182 C146 176 154 176 158 182" /><path d="M124 214 C138 226 162 226 176 214" />`,
+    mask: `<circle fill="#000" cx="150" cy="154" r="84" /><circle fill="#000" cx="92" cy="100" r="24" /><circle fill="#000" cx="208" cy="100" r="24" /><ellipse fill="#fff" cx="124" cy="154" rx="24" ry="30" /><ellipse fill="#fff" cx="176" cy="154" rx="24" ry="30" />`
+  },
+  truck: {
+    line: `<path d="M40 146 H200 V88 H262 L308 146 V214 H40 Z" /><path d="M200 114 H250 L274 146" /><rect x="54" y="106" width="98" height="52" rx="8" /><circle cx="96" cy="214" r="28" /><circle cx="246" cy="214" r="28" /><path d="M228 118 H254" />`,
+    mask: `<path fill="#000" d="M40 146 H200 V88 H262 L308 146 V214 H40 Z" /><circle fill="#000" cx="96" cy="214" r="28" /><circle fill="#000" cx="246" cy="214" r="28" />`
+  },
+  heart: {
+  line: `
+    <path d="
+      M150 220
+      C90 180 60 140 60 100
+      C60 70 84 50 114 50
+      C132 50 144 58 150 72
+      C156 58 168 50 186 50
+      C216 50 240 70 240 100
+      C240 140 210 180 150 220
+      Z
+    " />
+  `,
+  mask: `
+    <path fill="#000" d="
+      M150 220
+      C90 180 60 140 60 100
+      C60 70 84 50 114 50
+      C132 50 144 58 150 72
+      C156 58 168 50 186 50
+      C216 50 240 70 240 100
+      C240 140 210 180 150 220
+      Z
+    " />
+  `
+},
+star: {
+  line: `
+    <path d="M150 70 L172 126 L232 126 L184 162 L202 220 L150 184 L98 220 L116 162 L68 126 L128 126 Z" />
+    <circle cx="150" cy="150" r="24" />
+  `,
+  mask: `
+    <path fill="#000" d="M150 70 L172 126 L232 126 L184 162 L202 220 L150 184 L98 220 L116 162 L68 126 L128 126 Z" />
+  `
+},
+flower: {
+  line: `
+    <circle cx="150" cy="150" r="24" />
+    <circle cx="150" cy="96" r="28" />
+    <circle cx="204" cy="150" r="28" />
+    <circle cx="150" cy="204" r="28" />
+    <circle cx="96" cy="150" r="28" />
+    <circle cx="112" cy="112" r="24" />
+    <circle cx="188" cy="112" r="24" />
+    <circle cx="188" cy="188" r="24" />
+    <circle cx="112" cy="188" r="24" />
+  `,
+  mask: `
+    <circle fill="#000" cx="150" cy="150" r="24" />
+    <circle fill="#000" cx="150" cy="96" r="28" />
+    <circle fill="#000" cx="204" cy="150" r="28" />
+    <circle fill="#000" cx="150" cy="204" r="28" />
+    <circle fill="#000" cx="96" cy="150" r="28" />
+  `
+}
 };
 
 function makePicture(name, pieces) {
@@ -201,6 +276,9 @@ function makeCategory(id, name, scenes) {
 
 const categories = [
   makeCategory("animals", "Animals", [
+    scene("Heart", [["heart", 250, 250, 1.35]]),
+    scene("Star", [["star", 250, 250, 1.35]]),
+    scene("Flower", [["flower", 250, 250, 1.35]]),
     scene("Dog", [["dog", 250, 250, 1.35]]),
     scene("Rabbit", [["rabbit", 250, 250, 1.35]]),
     scene("Fish", [["fish", 235, 285, 1.35]]),
@@ -208,6 +286,10 @@ const categories = [
     scene("Butterfly", [["butterfly", 245, 245, 1.35]]),
     scene("Turtle", [["turtle", 250, 265, 1.3]]),
     scene("Cat", [["cat", 250, 250, 1.35]]),
+    scene("Frog", [["frog", 250, 250, 1.35]]),
+    scene("Bee", [["bee", 250, 250, 1.35]]),
+    scene("Pig", [["pig", 250, 250, 1.35]]),
+    scene("Panda", [["panda", 250, 250, 1.35]]),
     // scene("Cat and Fish", [["cat", 120, 230, 1.05], ["fish", 470, 320, 0.95]]),
     // scene("Dog and Ball", [["dog", 120, 225, 1.05], ["ball", 500, 370, 0.8]]),
     // scene("Rabbit Garden", [["rabbit", 105, 255, 0.95], ["flower", 460, 300, 0.85], ["flower", 610, 330, 0.75]]),
@@ -251,6 +333,7 @@ const categories = [
     scene("Airplane", [["airplane", 230, 300, 1.38]]),
     scene("Boat", [["boat", 245, 270, 1.35]]),
     scene("Train", [["train", 230, 295, 1.38]]),
+    scene("Truck", [["truck", 228, 295, 1.32]]),
     scene("Car and Sun", [["car", 110, 360, 0.98], ["sun", 555, 95, 0.7]]),
     scene("Bus Stop", [["bus", 90, 330, 1.0], ["tree", 520, 260, 0.82]]),
     // scene("Rocket Stars", [["rocket", 120, 220, 1.02], ["star", 455, 120, 0.46], ["moon", 565, 255, 0.55]]),
