@@ -190,6 +190,13 @@ canvas {
   height: 100%;
 }
 
+.picture-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 button:focus-visible,
 input:focus-visible {
   outline: 3px solid #ffb545;

@@ -1,16 +1,18 @@
 const colors = [
   "#f94144",
+  "#3cff00",
   "#f8961e",
   "#f9c74f",
-  "#43aa8b",
-  "#277da1",
-  "#9b5de5",
+  "#0030b6",
+  "#00a745",
+  "#8942e0",
   "#ff70a6",
   "#70d6ff",
   "#8ac926",
   "#6d597a",
   "#8d5524",
-  "#ffffff"
+  "#ffffff",
+  "#000000"
 ];
 
 const lineAttrs = `fill="none" stroke="#111" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"`;
@@ -259,15 +261,31 @@ function makePicture(name, pieces) {
   const lineContent = pieces.map(([key, x, y, scale]) => layer(artParts[key].line, x, y, scale)).join("");
   const maskContent = pieces.map(([key, x, y, scale]) => layer(artParts[key].mask, x, y, scale)).join("");
   return {
+    kind: "svg",
     id: slug(name),
     name,
+    source: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgPage(fittedLayers(pieces, lineContent)))}`,
+    maskSource: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(maskPage(fittedLayers(pieces, maskContent)))}`,
     svg: svgPage(fittedLayers(pieces, lineContent)),
-    mask: maskPage(fittedLayers(pieces, maskContent))
+    mask: maskPage(fittedLayers(pieces, maskContent)),
+    thumbHtml: svgPage(fittedLayers(pieces, lineContent))
   };
 }
 
 function scene(name, pieces) {
   return makePicture(name, pieces);
+}
+
+function makeFilePicture(fileName, name) {
+  const id = `pic-${slug(fileName)}`;
+  const source = `pic/${fileName}`;
+  return {
+    kind: "image",
+    id,
+    name,
+    source,
+    thumbSrc: source
+  };
 }
 
 function makeCategory(id, name, scenes) {
@@ -278,7 +296,6 @@ const categories = [
   makeCategory("animals", "Animals", [
     scene("Heart", [["heart", 250, 250, 1.35]]),
     scene("Star", [["star", 250, 250, 1.35]]),
-    scene("Flower", [["flower", 250, 250, 1.35]]),
     scene("Dog", [["dog", 250, 250, 1.35]]),
     scene("Rabbit", [["rabbit", 250, 250, 1.35]]),
     scene("Fish", [["fish", 235, 285, 1.35]]),
@@ -305,7 +322,7 @@ const categories = [
     // scene("Pond Day", [["turtle", 120, 375, 0.92], ["fish", 430, 365, 0.82], ["flower", 600, 240, 0.66]])
   ]),
   makeCategory("nature", "Nature", [
-    scene("Flower", [["flower", 250, 245, 1.35]]),
+    // scene("Flower", [["flower", 250, 245, 1.35]]),
     scene("Tree", [["tree", 260, 225, 1.32]]),
     scene("Sun", [["sun", 250, 250, 1.35]]),
     scene("Cloud", [["cloud", 220, 300, 1.42]]),
@@ -318,9 +335,9 @@ const categories = [
     // scene("Flower Field", [["flower", 70, 320, 0.78], ["flower", 300, 280, 0.85], ["flower", 530, 330, 0.78]]),
     // scene("Night Sky", [["moon", 140, 125, 0.88], ["star", 430, 110, 0.5], ["star", 600, 260, 0.42], ["cloud", 260, 490, 0.85]]),
     scene("Two Trees", [["tree", 100, 285, 0.96], ["tree", 440, 250, 1.1]]),
-    scene("Sun and Flowers", [["sun", 510, 70, 0.72], ["flower", 100, 330, 0.72], ["flower", 300, 300, 0.8], ["flower", 510, 330, 0.72]]),
+    // scene("Sun and Flowers", [["sun", 510, 70, 0.72], ["flower", 100, 330, 0.72], ["flower", 300, 300, 0.8], ["flower", 510, 330, 0.72]]),
     scene("Moon and Cloud", [["moon", 155, 115, 0.92], ["cloud", 390, 310, 1.0], ["star", 575, 110, 0.42]]),
-    scene("Garden Path", [["tree", 95, 220, 0.95], ["flower", 380, 335, 0.74], ["flower", 545, 350, 0.68], ["sun", 570, 85, 0.58]]),
+    // scene("Garden Path", [["tree", 95, 220, 0.95], ["flower", 380, 335, 0.74], ["flower", 545, 350, 0.68], ["sun", 570, 85, 0.58]]),
     scene("Big Rainbow", [["rainbow", 150, 190, 1.7]]),
     // scene("Cloud Trio", [["cloud", 60, 210, 0.82], ["cloud", 300, 150, 0.95], ["cloud", 520, 290, 0.78]]),
     // scene("Star Garden", [["star", 120, 100, 0.55], ["star", 520, 140, 0.45], ["flower", 185, 345, 0.84], ["flower", 455, 335, 0.82]]),
@@ -405,7 +422,7 @@ const pictureList = document.querySelector("#pictureList");
 const palette = document.querySelector("#palette");
 const brushSize = document.querySelector("#brushSize");
 const brushValue = document.querySelector("#brushValue");
-const allPictures = categories.flatMap((category) => category.pictures);
+let allPictures = categories.flatMap((category) => category.pictures);
 
 let activePicture = allPictures[0].id;
 let activeColor = colors[0];
@@ -434,7 +451,11 @@ function renderPictures() {
     button.className = "picture-button";
     button.type = "button";
     button.setAttribute("aria-pressed", String(picture.id === activePicture));
-    button.innerHTML = `<div class="picture-thumb" aria-hidden="true">${picture.svg}</div><span>${picture.name}</span>`;
+    if (picture.thumbHtml) {
+      button.innerHTML = `<div class="picture-thumb" aria-hidden="true">${picture.thumbHtml}</div><span>${picture.name}</span>`;
+    } else {
+      button.innerHTML = `<div class="picture-thumb" aria-hidden="true"><img src="${picture.thumbSrc}" alt="" loading="lazy"></div><span>${picture.name}</span>`;
+    }
     button.addEventListener("click", () => {
       activePicture = picture.id;
       undoStack = [];
@@ -496,30 +517,41 @@ function applyPaintMask() {
 
 function loadPicture() {
   const picture = getCurrentPicture();
-  const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(picture.svg)}`;
-  const maskUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(picture.mask)}`;
+  if (!picture) {
+    return;
+  }
+
   let loadedImages = 0;
+  const needsMask = picture.kind !== "image";
 
   function finishLoad() {
     loadedImages += 1;
-    if (loadedImages < 2) {
+    if (loadedImages < (needsMask ? 2 : 1)) {
       return;
     }
 
-    maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
-    maskCtx.drawImage(maskImage, 0, 0, maskCanvas.width, maskCanvas.height);
-    maskReady = true;
+    if (needsMask) {
+      maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+      maskCtx.drawImage(maskImage, 0, 0, maskCanvas.width, maskCanvas.height);
+      maskReady = true;
+    } else {
+      maskReady = false;
+    }
+
     clearPaint();
     drawScene();
   }
 
   maskReady = false;
   baseImage = new Image();
-  maskImage = new Image();
   baseImage.onload = finishLoad;
-  maskImage.onload = finishLoad;
-  baseImage.src = svgUrl;
-  maskImage.src = maskUrl;
+  baseImage.src = picture.source;
+
+  if (needsMask) {
+    maskImage = new Image();
+    maskImage.onload = finishLoad;
+    maskImage.src = picture.maskSource;
+  }
 }
 
 function getCanvasPoint(event) {
@@ -564,6 +596,64 @@ function stopDrawing() {
   paintCtx.closePath();
 }
 
+async function loadFolderPictures() {
+  try {
+    const response = await fetch("pic/pictures.json", { cache: "no-store" });
+    if (!response.ok) {
+      return;
+    }
+
+    const entries = await response.json();
+    if (!Array.isArray(entries)) {
+      return;
+    }
+
+    const externalPictures = entries
+      .map((entry) => {
+        if (typeof entry === "string") {
+          const fileName = entry.trim();
+          if (!fileName) {
+            return null;
+          }
+          return makeFilePicture(fileName, fileName.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "));
+        }
+
+        if (!entry || typeof entry !== "object") {
+          return null;
+        }
+
+        const fileName = String(entry.file || entry.name || "").trim();
+        if (!fileName) {
+          return null;
+        }
+
+        const label = String(entry.name || fileName.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ")).trim();
+        return makeFilePicture(fileName, label);
+      })
+      .filter(Boolean);
+
+    if (externalPictures.length === 0) {
+      return;
+    }
+
+    const existingIds = new Set(allPictures.map((picture) => picture.id));
+    const newPictures = externalPictures.filter((picture) => !existingIds.has(picture.id));
+    if (newPictures.length === 0) {
+      return;
+    }
+
+    allPictures = allPictures.concat(newPictures);
+    renderPictures();
+
+    if (!getCurrentPicture()) {
+      activePicture = allPictures[0].id;
+      loadPicture();
+    }
+  } catch (error) {
+    return;
+  }
+}
+
 function paintPoint(x, y) {
   paintCtx.fillStyle = activeColor;
   paintCtx.globalCompositeOperation = activeColor === "#ffffff" ? "destination-out" : "source-over";
@@ -593,3 +683,4 @@ canvas.addEventListener("pointerleave", stopDrawing);
 renderPictures();
 renderPalette();
 loadPicture();
+loadFolderPictures();
