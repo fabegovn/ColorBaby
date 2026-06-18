@@ -29,7 +29,7 @@ function layer(content, x, y, scale = 1) {
 
 function fittedLayers(pieces, content) {
   const artSize = 330;
-  const padding = 60;
+  const padding = 1;
   const bounds = pieces.reduce(
     (box, [, x, y, scale = 1]) => ({
       minX: Math.min(box.minX, x),
