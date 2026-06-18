@@ -27,6 +27,27 @@ function layer(content, x, y, scale = 1) {
   return `<g transform="translate(${x} ${y}) scale(${scale})">${content}</g>`;
 }
 
+function fittedLayers(pieces, content) {
+  const artSize = 330;
+  const padding = 60;
+  const bounds = pieces.reduce(
+    (box, [, x, y, scale = 1]) => ({
+      minX: Math.min(box.minX, x),
+      minY: Math.min(box.minY, y),
+      maxX: Math.max(box.maxX, x + artSize * scale),
+      maxY: Math.max(box.maxY, y + artSize * scale)
+    }),
+    { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+  );
+  const width = bounds.maxX - bounds.minX;
+  const height = bounds.maxY - bounds.minY;
+  const fitScale = Math.min((900 - padding * 2) / width, (900 - padding * 2) / height);
+  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale;
+  const y = (900 - height * fitScale) / 2 - bounds.minY * fitScale;
+
+  return `<g transform="translate(${x} ${y}) scale(${fitScale})">${content}</g>`;
+}
+
 function slug(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
@@ -164,8 +185,8 @@ function makePicture(name, pieces) {
   return {
     id: slug(name),
     name,
-    svg: svgPage(lineContent),
-    mask: maskPage(maskContent)
+    svg: svgPage(fittedLayers(pieces, lineContent)),
+    mask: maskPage(fittedLayers(pieces, maskContent))
   };
 }
 
