@@ -42,7 +42,7 @@ function fittedLayers(pieces, content) {
   const width = bounds.maxX - bounds.minX;
   const height = bounds.maxY - bounds.minY;
   const fitScale = Math.min((900 - padding * 2) / width, (900 - padding * 2) / height);
-  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale +20;
+  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale +10;
   const y = (900 - height * fitScale) / 2 - bounds.minY * fitScale;
 
   return `<g transform="translate(${x} ${y}) scale(${fitScale})">${content}</g>`;
@@ -53,13 +53,14 @@ function slug(text) {
 }
 
 const artParts = {
-  cat: {
-    line: `<path d="M72 116 L56 44 L120 86" /><path d="M228 116 L244 44 L180 86" /><path d="M52 142 C52 82 98 56 150 56 C202 56 248 82 248 142 C248 218 200 260 150 260 C100 260 52 218 52 142 Z" /><path d="M112 146 C120 138 132 138 140 146" /><path d="M160 146 C168 138 180 138 188 146" /><path d="M150 164 L138 184 L162 184 Z" /><path d="M150 184 C136 202 116 208 96 204" /><path d="M150 184 C164 202 184 208 204 204" />`,
-    mask: `<path fill="#000" d="M72 116 L56 44 L120 86 C138 66 162 66 180 86 L244 44 L228 116 C244 138 250 162 248 188 C242 234 202 260 150 260 C98 260 58 234 52 188 C50 162 56 138 72 116 Z" />`
-  },
+  
   dog: {
     line: `<path d="M66 128 C66 76 104 48 150 48 C196 48 234 76 234 128 C234 212 196 260 150 260 C104 260 66 212 66 128 Z" /><path d="M82 106 C48 82 38 34 72 24 C108 14 128 60 112 104" /><path d="M218 106 C252 82 262 34 228 24 C192 14 172 60 188 104" /><path d="M116 142 C124 134 136 134 144 142" /><path d="M156 142 C164 134 176 134 184 142" /><path d="M150 160 C136 160 128 172 138 184 C146 192 154 192 162 184 C172 172 164 160 150 160 Z" /><path d="M150 184 V204" /><path d="M126 214 C140 228 160 228 174 214" />`,
     mask: `<path fill="#000" d="M66 128 C66 76 104 48 150 48 C196 48 234 76 234 128 C234 212 196 260 150 260 C104 260 66 212 66 128 Z" /><path fill="#000" d="M82 106 C48 82 38 34 72 24 C108 14 128 60 112 104 Z" /><path fill="#000" d="M218 106 C252 82 262 34 228 24 C192 14 172 60 188 104 Z" />`
+  },
+  cat: {
+    line: `<path d="M72 116 L56 44 L120 86" /><path d="M228 116 L244 44 L180 86" /><path d="M52 142 C52 82 98 56 150 56 C202 56 248 82 248 142 C248 218 200 260 150 260 C100 260 52 218 52 142 Z" /><path d="M112 146 C120 138 132 138 140 146" /><path d="M160 146 C168 138 180 138 188 146" /><path d="M150 164 L138 184 L162 184 Z" /><path d="M150 184 C136 202 116 208 96 204" /><path d="M150 184 C164 202 184 208 204 204" />`,
+    mask: `<path fill="#000" d="M72 116 L56 44 L120 86 C138 66 162 66 180 86 L244 44 L228 116 C244 138 250 162 248 188 C242 234 202 260 150 260 C98 260 58 234 52 188 C50 162 56 138 72 116 Z" />`
   },
   rabbit: {
     line: `<ellipse cx="150" cy="160" rx="78" ry="92" /><path d="M116 76 C88 22 108 0 140 60" /><path d="M184 76 C212 22 192 0 160 60" /><path d="M118 150 C126 140 138 140 146 150" /><path d="M154 150 C162 140 174 140 182 150" /><path d="M150 170 L140 184 L160 184 Z" /><path d="M126 212 C140 230 160 230 174 212" /><path d="M84 190 H38" /><path d="M216 190 H262" />`,
@@ -200,13 +201,13 @@ function makeCategory(id, name, scenes) {
 
 const categories = [
   makeCategory("animals", "Animals", [
-    scene("Cat", [["cat", 250, 250, 1.35]]),
     scene("Dog", [["dog", 250, 250, 1.35]]),
     scene("Rabbit", [["rabbit", 250, 250, 1.35]]),
     scene("Fish", [["fish", 235, 285, 1.35]]),
     scene("Bird", [["bird", 245, 250, 1.35]]),
     scene("Butterfly", [["butterfly", 245, 245, 1.35]]),
     scene("Turtle", [["turtle", 250, 265, 1.3]]),
+    scene("Cat", [["cat", 250, 250, 1.35]]),
     scene("Cat and Fish", [["cat", 120, 230, 1.05], ["fish", 470, 320, 0.95]]),
     scene("Dog and Ball", [["dog", 120, 225, 1.05], ["ball", 500, 370, 0.8]]),
     scene("Rabbit Garden", [["rabbit", 105, 255, 0.95], ["flower", 460, 300, 0.85], ["flower", 610, 330, 0.75]]),
