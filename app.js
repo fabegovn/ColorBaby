@@ -301,8 +301,6 @@ const pictureList = document.querySelector("#pictureList");
 const palette = document.querySelector("#palette");
 const brushSize = document.querySelector("#brushSize");
 const brushValue = document.querySelector("#brushValue");
-const undoButton = document.querySelector("#undoButton");
-const clearButton = document.querySelector("#clearButton");
 
 let activeCategory = categories[0].id;
 let activePicture = categories[0].pictures[0].id;
@@ -318,6 +316,8 @@ paintCanvas.width = canvas.width;
 paintCanvas.height = canvas.height;
 maskCanvas.width = canvas.width;
 maskCanvas.height = canvas.height;
+
+
 
 function getCurrentCategory() {
   return categories.find((category) => category.id === activeCategory);
@@ -382,16 +382,13 @@ function renderPalette() {
   });
 }
 
-function updateUndoButton() {
-  undoButton.disabled = undoStack.length === 0;
-}
+
 
 function snapshot() {
   undoStack.push(paintCtx.getImageData(0, 0, paintCanvas.width, paintCanvas.height));
   if (undoStack.length > 18) {
     undoStack.shift();
   }
-  updateUndoButton();
 }
 
 function drawScene() {
@@ -434,7 +431,6 @@ function loadPicture() {
     maskReady = true;
     clearPaint();
     drawScene();
-    updateUndoButton();
   }
 
   maskReady = false;
@@ -504,20 +500,7 @@ brushSize.addEventListener("input", () => {
   brushValue.textContent = activeBrush;
 });
 
-undoButton.addEventListener("click", () => {
-  const previous = undoStack.pop();
-  if (previous) {
-    paintCtx.putImageData(previous, 0, 0);
-    drawScene();
-  }
-  updateUndoButton();
-});
 
-clearButton.addEventListener("click", () => {
-  snapshot();
-  clearPaint();
-  drawScene();
-});
 
 canvas.addEventListener("pointerdown", startDrawing);
 canvas.addEventListener("pointermove", continueDrawing);
@@ -529,4 +512,3 @@ renderCategories();
 renderPictures();
 renderPalette();
 loadPicture();
-updateUndoButton();
