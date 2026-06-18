@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ColorBaby</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Coloring controls">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">CB</div>
+          <div>
+            <h1>ColorBaby</h1>
+            <p>Pick a picture and paint.</p>
+          </div>
+        </div>
+
+        <section class="control-group" aria-labelledby="category-heading">
+          <h2 id="category-heading">Category</h2>
+          <div class="segmented" id="categoryList"></div>
+        </section>
+
+        <section class="control-group" aria-labelledby="picture-heading">
+          <h2 id="picture-heading">Picture</h2>
+          <div class="picture-grid" id="pictureList"></div>
+        </section>
+
+        <section class="control-group" aria-labelledby="color-heading">
+          <h2 id="color-heading">Color</h2>
+          <div class="palette" id="palette"></div>
+        </section>
+
+        <section class="control-group brush-control" aria-labelledby="brush-heading">
+          <div class="brush-title">
+            <h2 id="brush-heading">Brush</h2>
+            <output id="brushValue" for="brushSize">18</output>
+          </div>
+          <input id="brushSize" type="range" min="6" max="42" value="18">
+        </section>
+
+        <div class="actions">
+          <button class="tool-button" id="undoButton" type="button" aria-label="Undo last brush stroke" title="Undo">
+            <span aria-hidden="true">&#8630;</span>
+          </button>
+          <button class="tool-button" id="clearButton" type="button" aria-label="Clear all coloring" title="Clear">
+            <span aria-hidden="true">&#9003;</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="stage" aria-label="Coloring canvas">
+        <div class="canvas-wrap">
+          <canvas id="colorCanvas" width="900" height="900" aria-label="Paint on the picture"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
