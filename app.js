@@ -317,14 +317,13 @@ const paintCanvas = document.createElement("canvas");
 const paintCtx = paintCanvas.getContext("2d");
 const maskCanvas = document.createElement("canvas");
 const maskCtx = maskCanvas.getContext("2d");
-const categoryList = document.querySelector("#categoryList");
 const pictureList = document.querySelector("#pictureList");
 const palette = document.querySelector("#palette");
 const brushSize = document.querySelector("#brushSize");
 const brushValue = document.querySelector("#brushValue");
+const allPictures = categories.flatMap((category) => category.pictures);
 
-let activeCategory = categories[0].id;
-let activePicture = categories[0].pictures[0].id;
+let activePicture = allPictures[0].id;
 let activeColor = colors[0];
 let activeBrush = Number(brushSize.value);
 let drawing = false;
@@ -340,37 +339,13 @@ maskCanvas.height = canvas.height;
 
 
 
-function getCurrentCategory() {
-  return categories.find((category) => category.id === activeCategory);
-}
-
 function getCurrentPicture() {
-  return getCurrentCategory().pictures.find((picture) => picture.id === activePicture);
-}
-
-function renderCategories() {
-  categoryList.innerHTML = "";
-  categories.forEach((category) => {
-    const button = document.createElement("button");
-    button.className = "category-button";
-    button.type = "button";
-    button.textContent = category.name;
-    button.setAttribute("aria-pressed", String(category.id === activeCategory));
-    button.addEventListener("click", () => {
-      activeCategory = category.id;
-      activePicture = category.pictures[0].id;
-      undoStack = [];
-      renderCategories();
-      renderPictures();
-      loadPicture();
-    });
-    categoryList.append(button);
-  });
+  return allPictures.find((picture) => picture.id === activePicture);
 }
 
 function renderPictures() {
   pictureList.innerHTML = "";
-  getCurrentCategory().pictures.forEach((picture) => {
+  allPictures.forEach((picture) => {
     const button = document.createElement("button");
     button.className = "picture-button";
     button.type = "button";
@@ -518,7 +493,9 @@ function paintPoint(x, y) {
 
 brushSize.addEventListener("input", () => {
   activeBrush = Number(brushSize.value);
-  brushValue.textContent = activeBrush;
+  if (brushValue) {
+    brushValue.textContent = activeBrush;
+  }
 });
 
 
@@ -529,7 +506,6 @@ canvas.addEventListener("pointerup", stopDrawing);
 canvas.addEventListener("pointercancel", stopDrawing);
 canvas.addEventListener("pointerleave", stopDrawing);
 
-renderCategories();
 renderPictures();
 renderPalette();
 loadPicture();
