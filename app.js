@@ -42,7 +42,7 @@ function fittedLayers(pieces, content) {
   const width = bounds.maxX - bounds.minX;
   const height = bounds.maxY - bounds.minY;
   const fitScale = Math.min((900 - padding * 2) / width, (900 - padding * 2) / height);
-  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale +10;
+  const x = (900 - width * fitScale) / 2 - bounds.minX * fitScale;
   const y = (900 - height * fitScale) / 2 - bounds.minY * fitScale;
 
   return `<g transform="translate(${x} ${y}) scale(${fitScale})">${content}</g>`;
@@ -208,19 +208,19 @@ const categories = [
     scene("Butterfly", [["butterfly", 245, 245, 1.35]]),
     scene("Turtle", [["turtle", 250, 265, 1.3]]),
     scene("Cat", [["cat", 250, 250, 1.35]]),
-    scene("Cat and Fish", [["cat", 120, 230, 1.05], ["fish", 470, 320, 0.95]]),
-    scene("Dog and Ball", [["dog", 120, 225, 1.05], ["ball", 500, 370, 0.8]]),
-    scene("Rabbit Garden", [["rabbit", 105, 255, 0.95], ["flower", 460, 300, 0.85], ["flower", 610, 330, 0.75]]),
+    // scene("Cat and Fish", [["cat", 120, 230, 1.05], ["fish", 470, 320, 0.95]]),
+    // scene("Dog and Ball", [["dog", 120, 225, 1.05], ["ball", 500, 370, 0.8]]),
+    // scene("Rabbit Garden", [["rabbit", 105, 255, 0.95], ["flower", 460, 300, 0.85], ["flower", 610, 330, 0.75]]),
     scene("Bird in Tree", [["tree", 130, 185, 1.15], ["bird", 460, 240, 0.82]]),
-    scene("Fish Friends", [["fish", 110, 245, 0.92], ["fish", 405, 335, 0.82], ["fish", 550, 185, 0.72]]),
-    scene("Butterfly Flowers", [["butterfly", 115, 180, 0.92], ["flower", 430, 285, 0.82], ["flower", 570, 330, 0.78]]),
-    scene("Turtle and Sun", [["turtle", 135, 355, 1.0], ["sun", 545, 95, 0.78]]),
-    scene("Cat Moon", [["cat", 130, 275, 1.05], ["moon", 535, 90, 0.75], ["star", 440, 170, 0.36]]),
+    // scene("Fish Friends", [["fish", 110, 245, 0.92], ["fish", 405, 335, 0.82], ["fish", 550, 185, 0.72]]),
+    // scene("Butterfly Flowers", [["butterfly", 115, 180, 0.92], ["flower", 430, 285, 0.82], ["flower", 570, 330, 0.78]]),
+    // scene("Turtle and Sun", [["turtle", 135, 355, 1.0], ["sun", 545, 95, 0.78]]),
+    // scene("Cat Moon", [["cat", 130, 275, 1.05], ["moon", 535, 90, 0.75], ["star", 440, 170, 0.36]]),
     scene("Dog House", [["dog", 85, 310, 0.92], ["house", 440, 230, 1.0]]),
     scene("Rabbit and Kite", [["rabbit", 110, 330, 0.92], ["kite", 500, 105, 0.82]]),
-    scene("Bird Cloud", [["bird", 110, 320, 0.95], ["cloud", 430, 125, 1.0], ["sun", 620, 70, 0.48]]),
-    scene("Animal Party", [["cat", 75, 275, 0.82], ["dog", 315, 285, 0.82], ["rabbit", 555, 290, 0.78]]),
-    scene("Pond Day", [["turtle", 120, 375, 0.92], ["fish", 430, 365, 0.82], ["flower", 600, 240, 0.66]])
+    // scene("Bird Cloud", [["bird", 110, 320, 0.95], ["cloud", 430, 125, 1.0], ["sun", 620, 70, 0.48]]),
+    // scene("Animal Party", [["cat", 75, 275, 0.82], ["dog", 315, 285, 0.82], ["rabbit", 555, 290, 0.78]]),
+    // scene("Pond Day", [["turtle", 120, 375, 0.92], ["fish", 430, 365, 0.82], ["flower", 600, 240, 0.66]])
   ]),
   makeCategory("nature", "Nature", [
     scene("Flower", [["flower", 250, 245, 1.35]]),
@@ -232,17 +232,17 @@ const categories = [
     scene("Moon", [["moon", 260, 235, 1.35]]),
     scene("Sunny Tree", [["tree", 160, 285, 1.0], ["sun", 550, 80, 0.72]]),
     scene("Cloudy Sun", [["sun", 145, 105, 0.78], ["cloud", 345, 240, 1.1]]),
-    scene("Rainbow Clouds", [["rainbow", 230, 205, 1.2], ["cloud", 80, 520, 0.75], ["cloud", 520, 520, 0.75]]),
-    scene("Flower Field", [["flower", 70, 320, 0.78], ["flower", 300, 280, 0.85], ["flower", 530, 330, 0.78]]),
-    scene("Night Sky", [["moon", 140, 125, 0.88], ["star", 430, 110, 0.5], ["star", 600, 260, 0.42], ["cloud", 260, 490, 0.85]]),
+    // scene("Rainbow Clouds", [["rainbow", 230, 205, 1.2], ["cloud", 80, 520, 0.75], ["cloud", 520, 520, 0.75]]),
+    // scene("Flower Field", [["flower", 70, 320, 0.78], ["flower", 300, 280, 0.85], ["flower", 530, 330, 0.78]]),
+    // scene("Night Sky", [["moon", 140, 125, 0.88], ["star", 430, 110, 0.5], ["star", 600, 260, 0.42], ["cloud", 260, 490, 0.85]]),
     scene("Two Trees", [["tree", 100, 285, 0.96], ["tree", 440, 250, 1.1]]),
     scene("Sun and Flowers", [["sun", 510, 70, 0.72], ["flower", 100, 330, 0.72], ["flower", 300, 300, 0.8], ["flower", 510, 330, 0.72]]),
     scene("Moon and Cloud", [["moon", 155, 115, 0.92], ["cloud", 390, 310, 1.0], ["star", 575, 110, 0.42]]),
     scene("Garden Path", [["tree", 95, 220, 0.95], ["flower", 380, 335, 0.74], ["flower", 545, 350, 0.68], ["sun", 570, 85, 0.58]]),
     scene("Big Rainbow", [["rainbow", 150, 190, 1.7]]),
-    scene("Cloud Trio", [["cloud", 60, 210, 0.82], ["cloud", 300, 150, 0.95], ["cloud", 520, 290, 0.78]]),
-    scene("Star Garden", [["star", 120, 100, 0.55], ["star", 520, 140, 0.45], ["flower", 185, 345, 0.84], ["flower", 455, 335, 0.82]]),
-    scene("Nature Picnic", [["tree", 80, 250, 1.0], ["rainbow", 350, 140, 0.85], ["flower", 550, 360, 0.7], ["sun", 620, 70, 0.52]])
+    // scene("Cloud Trio", [["cloud", 60, 210, 0.82], ["cloud", 300, 150, 0.95], ["cloud", 520, 290, 0.78]]),
+    // scene("Star Garden", [["star", 120, 100, 0.55], ["star", 520, 140, 0.45], ["flower", 185, 345, 0.84], ["flower", 455, 335, 0.82]]),
+    // scene("Nature Picnic", [["tree", 80, 250, 1.0], ["rainbow", 350, 140, 0.85], ["flower", 550, 360, 0.7], ["sun", 620, 70, 0.52]])
   ]),
   makeCategory("vehicles", "Vehicles", [
     scene("Car", [["car", 240, 300, 1.32]]),
@@ -253,18 +253,18 @@ const categories = [
     scene("Train", [["train", 230, 295, 1.38]]),
     scene("Car and Sun", [["car", 110, 360, 0.98], ["sun", 555, 95, 0.7]]),
     scene("Bus Stop", [["bus", 90, 330, 1.0], ["tree", 520, 260, 0.82]]),
-    scene("Rocket Stars", [["rocket", 120, 220, 1.02], ["star", 455, 120, 0.46], ["moon", 565, 255, 0.55]]),
-    scene("Airplane Cloud", [["airplane", 100, 315, 0.98], ["cloud", 500, 130, 0.82]]),
+    // scene("Rocket Stars", [["rocket", 120, 220, 1.02], ["star", 455, 120, 0.46], ["moon", 565, 255, 0.55]]),
+    // scene("Airplane Cloud", [["airplane", 100, 315, 0.98], ["cloud", 500, 130, 0.82]]),
     scene("Boat and Fish", [["boat", 110, 280, 1.0], ["fish", 490, 455, 0.76]]),
-    scene("Train and Tree", [["train", 90, 365, 0.98], ["tree", 550, 230, 0.82]]),
-    scene("Two Cars", [["car", 70, 340, 0.86], ["car", 430, 390, 0.86]]),
+    // scene("Train and Tree", [["train", 90, 365, 0.98], ["tree", 550, 230, 0.82]]),
+    // scene("Two Cars", [["car", 70, 340, 0.86], ["car", 430, 390, 0.86]]),
     scene("Rocket Launch", [["rocket", 285, 125, 1.08], ["cloud", 130, 575, 0.72], ["cloud", 470, 585, 0.72]]),
     scene("Harbor Day", [["boat", 95, 320, 0.92], ["sun", 570, 85, 0.58], ["cloud", 420, 205, 0.7]]),
     scene("Airport", [["airplane", 80, 210, 0.86], ["bus", 420, 410, 0.78]]),
-    scene("Train Ride", [["train", 80, 330, 0.92], ["cloud", 470, 105, 0.78], ["sun", 640, 80, 0.48]]),
-    scene("Car House", [["car", 95, 420, 0.86], ["house", 445, 240, 0.92]]),
-    scene("Boat Rainbow", [["boat", 100, 390, 0.86], ["rainbow", 365, 150, 0.86]]),
-    scene("Vehicle Parade", [["car", 40, 420, 0.72], ["bus", 305, 400, 0.72], ["train", 555, 405, 0.72]])
+    // scene("Train Ride", [["train", 80, 330, 0.92], ["cloud", 470, 105, 0.78], ["sun", 640, 80, 0.48]]),
+    // scene("Car House", [["car", 95, 420, 0.86], ["house", 445, 240, 0.92]]),
+    // scene("Boat Rainbow", [["boat", 100, 390, 0.86], ["rainbow", 365, 150, 0.86]]),
+    // scene("Vehicle Parade", [["car", 40, 420, 0.72], ["bus", 305, 400, 0.72], ["train", 555, 405, 0.72]])
   ]),
   makeCategory("food", "Food", [
     scene("Apple", [["apple", 250, 250, 1.35]]),
@@ -273,20 +273,20 @@ const categories = [
     scene("Pizza", [["pizza", 250, 250, 1.35]]),
     scene("Cupcake", [["cupcake", 250, 250, 1.35]]),
     scene("Apple and Cake", [["apple", 105, 260, 1.0], ["cake", 455, 265, 0.98]]),
-    scene("Ice Cream Party", [["icecream", 70, 280, 0.92], ["icecream", 330, 250, 0.98], ["icecream", 560, 300, 0.84]]),
-    scene("Pizza Slice Duo", [["pizza", 110, 240, 1.0], ["pizza", 455, 300, 0.88]]),
+    // scene("Ice Cream Party", [["icecream", 70, 280, 0.92], ["icecream", 330, 250, 0.98], ["icecream", 560, 300, 0.84]]),
+    // scene("Pizza Slice Duo", [["pizza", 110, 240, 1.0], ["pizza", 455, 300, 0.88]]),
     scene("Cupcake Gift", [["cupcake", 125, 260, 1.0], ["gift", 475, 310, 0.86]]),
     scene("Birthday Snack", [["cake", 95, 260, 0.95], ["cupcake", 395, 300, 0.8], ["gift", 580, 330, 0.7]]),
-    scene("Fruit Star", [["apple", 145, 300, 0.92], ["star", 510, 145, 0.64]]),
-    scene("Dessert Table", [["cake", 60, 315, 0.8], ["cupcake", 320, 325, 0.74], ["icecream", 540, 300, 0.78]]),
-    scene("Picnic Food", [["apple", 80, 320, 0.8], ["pizza", 310, 315, 0.8], ["cupcake", 535, 320, 0.7]]),
-    scene("Cake and Balloons", [["cake", 230, 350, 0.9], ["ball", 80, 95, 0.55], ["ball", 570, 120, 0.5]]),
+    // scene("Fruit Star", [["apple", 145, 300, 0.92], ["star", 510, 145, 0.64]]),
+    // scene("Dessert Table", [["cake", 60, 315, 0.8], ["cupcake", 320, 325, 0.74], ["icecream", 540, 300, 0.78]]),
+    // scene("Picnic Food", [["apple", 80, 320, 0.8], ["pizza", 310, 315, 0.8], ["cupcake", 535, 320, 0.7]]),
+    // scene("Cake and Balloons", [["cake", 230, 350, 0.9], ["ball", 80, 95, 0.55], ["ball", 570, 120, 0.5]]),
     scene("Sweet Cloud", [["icecream", 120, 310, 0.9], ["cloud", 455, 130, 0.85]]),
     scene("Apple Tree", [["tree", 125, 220, 1.0], ["apple", 520, 330, 0.75]]),
-    scene("Pizza Picnic", [["pizza", 95, 325, 0.88], ["cloud", 450, 120, 0.75], ["sun", 610, 75, 0.5]]),
-    scene("Cupcake Rainbow", [["cupcake", 115, 345, 0.88], ["rainbow", 380, 155, 0.86]]),
-    scene("Snack Friends", [["apple", 75, 330, 0.74], ["icecream", 300, 315, 0.76], ["pizza", 520, 330, 0.74]]),
-    scene("Party Treats", [["cake", 70, 305, 0.78], ["cupcake", 300, 315, 0.72], ["icecream", 510, 300, 0.72], ["gift", 620, 430, 0.5]])
+    // scene("Pizza Picnic", [["pizza", 95, 325, 0.88], ["cloud", 450, 120, 0.75], ["sun", 610, 75, 0.5]]),
+    // scene("Cupcake Rainbow", [["cupcake", 115, 345, 0.88], ["rainbow", 380, 155, 0.86]]),
+    // scene("Snack Friends", [["apple", 75, 330, 0.74], ["icecream", 300, 315, 0.76], ["pizza", 520, 330, 0.74]]),
+    // scene("Party Treats", [["cake", 70, 305, 0.78], ["cupcake", 300, 315, 0.72], ["icecream", 510, 300, 0.72], ["gift", 620, 430, 0.5]])
   ]),
   makeCategory("fun", "Fun", [
     scene("House", [["house", 250, 250, 1.35]]),
@@ -295,20 +295,20 @@ const categories = [
     scene("Gift", [["gift", 250, 250, 1.35]]),
     scene("Robot", [["robot", 250, 250, 1.35]]),
     scene("Crown", [["crown", 250, 250, 1.35]]),
-    scene("House Garden", [["house", 110, 270, 1.0], ["flower", 485, 340, 0.72], ["tree", 570, 220, 0.78]]),
+    // scene("House Garden", [["house", 110, 270, 1.0], ["flower", 485, 340, 0.72], ["tree", 570, 220, 0.78]]),
     scene("Kite and Sun", [["kite", 120, 120, 0.9], ["sun", 560, 90, 0.66]]),
     scene("Ball and Gift", [["ball", 120, 320, 0.9], ["gift", 470, 310, 0.9]]),
     scene("Robot Star", [["robot", 105, 260, 1.0], ["star", 520, 115, 0.62]]),
     scene("Crown Castle", [["crown", 320, 95, 0.8], ["house", 255, 315, 0.95]]),
-    scene("Gift Party", [["gift", 90, 330, 0.82], ["gift", 330, 300, 0.9], ["gift", 560, 350, 0.74]]),
-    scene("Play Day", [["ball", 80, 350, 0.72], ["kite", 345, 100, 0.78], ["cloud", 520, 260, 0.72]]),
-    scene("Robot House", [["robot", 95, 295, 0.88], ["house", 445, 260, 0.92]]),
-    scene("Royal Gift", [["crown", 115, 170, 0.86], ["gift", 455, 330, 0.9]]),
-    scene("Sunny Home", [["house", 110, 320, 0.95], ["sun", 560, 80, 0.62], ["cloud", 435, 220, 0.68]]),
-    scene("Kite Garden", [["kite", 100, 80, 0.78], ["flower", 420, 330, 0.74], ["flower", 565, 360, 0.66]]),
-    scene("Robot Parade", [["robot", 65, 300, 0.78], ["robot", 325, 280, 0.86], ["robot", 565, 310, 0.72]]),
-    scene("Toy Box", [["ball", 70, 330, 0.68], ["gift", 300, 315, 0.72], ["robot", 520, 285, 0.72]]),
-    scene("Dream Room", [["house", 80, 345, 0.78], ["moon", 430, 100, 0.58], ["star", 590, 150, 0.42], ["gift", 520, 405, 0.58]])
+    // scene("Gift Party", [["gift", 90, 330, 0.82], ["gift", 330, 300, 0.9], ["gift", 560, 350, 0.74]]),
+    // scene("Play Day", [["ball", 80, 350, 0.72], ["kite", 345, 100, 0.78], ["cloud", 520, 260, 0.72]]),
+    // scene("Robot House", [["robot", 95, 295, 0.88], ["house", 445, 260, 0.92]]),
+    // scene("Royal Gift", [["crown", 115, 170, 0.86], ["gift", 455, 330, 0.9]]),
+    // scene("Sunny Home", [["house", 110, 320, 0.95], ["sun", 560, 80, 0.62], ["cloud", 435, 220, 0.68]]),
+    // scene("Kite Garden", [["kite", 100, 80, 0.78], ["flower", 420, 330, 0.74], ["flower", 565, 360, 0.66]]),
+    // scene("Robot Parade", [["robot", 65, 300, 0.78], ["robot", 325, 280, 0.86], ["robot", 565, 310, 0.72]]),
+    // scene("Toy Box", [["ball", 70, 330, 0.68], ["gift", 300, 315, 0.72], ["robot", 520, 285, 0.72]]),
+    // scene("Dream Room", [["house", 80, 345, 0.78], ["moon", 430, 100, 0.58], ["star", 590, 150, 0.42], ["gift", 520, 405, 0.58]])
   ])
 ];
 
