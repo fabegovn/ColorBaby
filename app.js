@@ -17,6 +17,10 @@ const colors = [
 
 const lineAttrs = `fill="none" stroke="#111" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"`;
 
+document.addEventListener("click", (event) => {
+  event.preventDefault();
+});
+
 function svgPage(content) {
   return `<svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg"><g ${lineAttrs}>${content}</g></svg>`;
 }
