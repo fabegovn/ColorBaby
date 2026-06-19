@@ -17,10 +17,6 @@ const colors = [
 
 const lineAttrs = `fill="none" stroke="#111" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"`;
 
-document.addEventListener("click", (event) => {
-  event.preventDefault();
-});
-
 function svgPage(content) {
   return `<svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg"><g ${lineAttrs}>${content}</g></svg>`;
 }
@@ -368,7 +364,6 @@ function makeCategory(id, name, scenes) {
 
 const categories = [
   makeCategory("animals", "Animals", [
-    scene("rainbow", [["rainbow", 250, 245, 1.35]]),
     scene("Flower", [["flower", 250, 245, 1.35]]),
     scene("Heart", [["heart", 250, 250, 1.35]]),
     scene("Star", [["star", 250, 250, 1.35]]),
@@ -442,6 +437,7 @@ const categories = [
     scene("Vehicle Parade", [["car", 40, 420, 0.72], ["bus", 305, 400, 0.72], ["train", 555, 405, 0.72]])
   ]),
   makeCategory("food", "Food", [
+    scene("rainbow", [["rainbow", 250, 245, 1.35]]),
     scene("Apple", [["apple", 250, 250, 1.35]]),
     scene("Cake", [["cake", 250, 250, 1.35]]),
     scene("Ice Cream", [["icecream", 250, 250, 1.35]]),
