@@ -399,7 +399,6 @@ function makeCategory(id, name, scenes) {
 
 const categories = [
   makeCategory("animals", "Animals", [
-    scene("Flower", [["flower", 250, 245, 1.35]]),
     scene("Heart", [["heart", 250, 250, 1.35]]),
     scene("Star", [["star", 250, 250, 1.35]]),
     scene("Dog", [["dog", 250, 250, 1.35]]),
@@ -416,6 +415,7 @@ const categories = [
     
   ]),
   makeCategory("nature", "Nature", [
+    scene("Flower", [["flower", 250, 245, 1.35]]),
     scene("Tree", [["tree", 260, 225, 1.32]]),
     scene("Sun", [["sun", 250, 250, 1.35]]),
     scene("Cloud", [["cloud", 220, 300, 1.42]]),
