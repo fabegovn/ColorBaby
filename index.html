@@ -2,8 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ColorBaby</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#ff70a6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Color</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -33,6 +39,15 @@
         <div class="picture-grid" id="pictureList"></div>
       </section>
     </main>
+
+    <div class="win-overlay" id="winOverlay" role="dialog" aria-modal="true" aria-labelledby="winTitle" hidden>
+      <div class="win-card">
+        <div class="win-stars" aria-hidden="true">⭐ 🎉 ⭐</div>
+        <h1 id="winTitle">Great job!</h1>
+        <p>You finished the picture!</p>
+        <button id="keepPaintingButton" type="button">Keep painting</button>
+      </div>
+    </div>
 
     <script src="app.js"></script>
   </body>

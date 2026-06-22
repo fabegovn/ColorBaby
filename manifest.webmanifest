@@ -1,0 +1,17 @@
+{
+  "name": "ColorBaby",
+  "short_name": "ColorBaby",
+  "description": "A cheerful coloring app for kids.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fffaf2",
+  "theme_color": "#ff70a6",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -12,8 +12,14 @@
   box-sizing: border-box;
 }
 
+html {
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
+  touch-action: manipulation;
+  overscroll-behavior: none;
   /* max-height: 100dvh; */
   /* overflow: hidden; */
   color: var(--ink);
@@ -201,4 +207,77 @@ button:focus-visible,
 input:focus-visible {
   outline: 3px solid #ffb545;
   outline-offset: 3px;
+}
+
+.win-overlay {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(21, 32, 43, 0.58);
+}
+
+.win-overlay[hidden] {
+  display: none;
+}
+
+.win-card {
+  width: min(100%, 390px);
+  padding: 32px 24px;
+  border: 5px solid #fff;
+  border-radius: 30px;
+  color: var(--ink);
+  background: linear-gradient(145deg, #fff7b2, #ffd9ef);
+  box-shadow: 0 24px 70px rgba(21, 32, 43, 0.3);
+  text-align: center;
+  animation: win-pop 420ms cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+
+.win-stars {
+  font-size: clamp(34px, 10vw, 56px);
+  animation: win-bounce 700ms ease-in-out infinite alternate;
+}
+
+.win-card h1 {
+  margin: 12px 0 4px;
+  font-size: clamp(36px, 10vw, 56px);
+}
+
+.win-card p {
+  margin: 0 0 24px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.win-card button {
+  min-height: 54px;
+  padding: 10px 28px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #8942e0;
+  box-shadow: 0 6px 0 #5f25ad;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.win-card button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #5f25ad;
+}
+
+@keyframes win-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.55) rotate(-5deg);
+  }
+}
+
+@keyframes win-bounce {
+  to {
+    transform: translateY(-8px) scale(1.06);
+  }
 }

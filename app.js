@@ -531,6 +531,8 @@ const pictureList = document.querySelector("#pictureList");
 const palette = document.querySelector("#palette");
 const brushSize = document.querySelector("#brushSize");
 const brushValue = document.querySelector("#brushValue");
+const winOverlay = document.querySelector("#winOverlay");
+const keepPaintingButton = document.querySelector("#keepPaintingButton");
 let allPictures = categories.flatMap((category) => category.pictures);
 
 let activePicture = allPictures[0].id;
@@ -541,6 +543,16 @@ let baseImage = new Image();
 let maskImage = new Image();
 let maskReady = false;
 let undoStack = [];
+let audioContext;
+let musicNoteIndex = 0;
+let lastMusicTime = 0;
+let pictureCompleted = false;
+
+const colorNotes = [
+  261.63, 293.66, 329.63, 349.23, 392.0, 440.0, 493.88,
+  523.25, 587.33, 659.25, 698.46, 783.99, 880.0, 987.77
+];
+const melodySteps = [0, 2, 4, 7, 5, 4, 2, 5, 7, 9, 7, 4, 2, 1];
 
 paintCanvas.width = canvas.width;
 paintCanvas.height = canvas.height;
@@ -652,6 +664,8 @@ function loadPicture() {
   }
 
   maskReady = false;
+  pictureCompleted = false;
+  winOverlay.hidden = true;
   baseImage = new Image();
   baseImage.onload = finishLoad;
   baseImage.src = picture.source;
@@ -671,11 +685,138 @@ function getCanvasPoint(event) {
   };
 }
 
+function playColorNote(noteOffset = 0) {
+  if (activeColor === "#ffffff") {
+    return;
+  }
+
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) {
+    return;
+  }
+
+  audioContext ||= new AudioContext();
+  const play = () => {
+    const now = audioContext.currentTime;
+    const gain = audioContext.createGain();
+    const colorIndex = Math.max(0, colors.indexOf(activeColor));
+    const noteIndex = (colorIndex + noteOffset) % colorNotes.length;
+    const frequencies = [
+      colorNotes[noteIndex],
+      colorNotes[noteIndex] * 1.5
+    ];
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.045, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+    gain.connect(audioContext.destination);
+
+    frequencies.forEach((frequency, index) => {
+      const oscillator = audioContext.createOscillator();
+      oscillator.type = index === 0 ? "sine" : "triangle";
+      oscillator.frequency.setValueAtTime(frequency, now);
+      oscillator.connect(gain);
+      oscillator.start(now);
+      oscillator.stop(now + 0.14);
+    });
+  };
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume().then(play);
+  } else {
+    play();
+  }
+}
+
+function playMovingMusic() {
+  const now = performance.now();
+  if (now - lastMusicTime < 95) {
+    return;
+  }
+
+  playColorNote(melodySteps[musicNoteIndex % melodySteps.length]);
+  musicNoteIndex += 1;
+  lastMusicTime = now;
+}
+
+function playWinMusic() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) {
+    return;
+  }
+
+  audioContext ||= new AudioContext();
+  const notes = [
+    [523.25, 0],
+    [659.25, 0.16],
+    [783.99, 0.32],
+    [1046.5, 0.5],
+    [783.99, 0.72],
+    [1046.5, 0.88]
+  ];
+
+  const play = () => {
+    const start = audioContext.currentTime;
+    notes.forEach(([frequency, delay], index) => {
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const noteStart = start + delay;
+      const duration = index >= notes.length - 2 ? 0.34 : 0.2;
+
+      oscillator.type = "triangle";
+      oscillator.frequency.setValueAtTime(frequency, noteStart);
+      gain.gain.setValueAtTime(0.0001, noteStart);
+      gain.gain.exponentialRampToValueAtTime(0.12, noteStart + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + duration);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(noteStart);
+      oscillator.stop(noteStart + duration + 0.02);
+    });
+  };
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume().then(play);
+  } else {
+    play();
+  }
+}
+
+function checkPictureCompletion() {
+  if (pictureCompleted || !maskReady) {
+    return;
+  }
+
+  const paintPixels = paintCtx.getImageData(0, 0, paintCanvas.width, paintCanvas.height).data;
+  const maskPixels = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height).data;
+  let colorablePixels = 0;
+  let paintedPixels = 0;
+
+  // Sampling every fourth pixel keeps the completion check quick on phones.
+  for (let pixel = 0; pixel < paintPixels.length; pixel += 16) {
+    if (maskPixels[pixel + 3] > 32) {
+      colorablePixels += 1;
+      if (paintPixels[pixel + 3] > 32) {
+        paintedPixels += 1;
+      }
+    }
+  }
+
+  if (colorablePixels > 0 && paintedPixels / colorablePixels >= 0.9) {
+    pictureCompleted = true;
+    winOverlay.hidden = false;
+    playWinMusic();
+    keepPaintingButton.focus();
+  }
+}
+
 function startDrawing(event) {
   event.preventDefault();
   canvas.setPointerCapture(event.pointerId);
   snapshot();
   drawing = true;
+  musicNoteIndex = 0;
+  lastMusicTime = 0;
   const point = getCanvasPoint(event);
   paintPoint(point.x, point.y);
   paintCtx.beginPath();
@@ -689,6 +830,7 @@ function continueDrawing(event) {
   }
 
   event.preventDefault();
+  playMovingMusic();
   const point = getCanvasPoint(event);
   paintCtx.lineTo(point.x, point.y);
   paintCtx.strokeStyle = activeColor;
@@ -705,8 +847,13 @@ function continueDrawing(event) {
 
 
 function stopDrawing() {
+  if (!drawing) {
+    return;
+  }
+
   drawing = false;
   paintCtx.closePath();
+  checkPictureCompletion();
 }
 
 
@@ -735,6 +882,32 @@ canvas.addEventListener("pointermove", continueDrawing);
 canvas.addEventListener("pointerup", stopDrawing);
 canvas.addEventListener("pointercancel", stopDrawing);
 canvas.addEventListener("pointerleave", stopDrawing);
+
+keepPaintingButton.addEventListener("click", () => {
+  winOverlay.hidden = true;
+  canvas.focus();
+});
+
+// Keep the coloring interface steady on phones by blocking pinch and
+// double-tap zoom gestures. Regular taps, drawing, and scrolling still work.
+document.addEventListener("gesturestart", (event) => {
+  event.preventDefault();
+});
+
+document.addEventListener("touchmove", (event) => {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+let lastTouchEnd = 0;
+document.addEventListener("touchend", (event) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, { passive: false });
 
 renderPictures();
 renderPalette();
